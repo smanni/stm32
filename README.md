@@ -1,4 +1,4 @@
 stm32
 =====
 
-STM32 learning repository
+My repository for learning STM32
