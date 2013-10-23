@@ -20,3 +20,5 @@
 
 # Eclipse
 *.metadata/
+*Debug/
+*Release/
