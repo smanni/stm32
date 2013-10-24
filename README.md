@@ -41,7 +41,9 @@ TODO
 
 Create a new project from template
 ----------------------------------
+TODO
 
 
 Build, burn and debug
 ---------------------
+TODO
