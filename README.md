@@ -1,4 +1,6 @@
-stm32
+SMT32
 =====
 
-My repository for learning STM32 microcontroller
+My repository for learning STM32F103Z microcontroller.
+
+Take a look at the wiki for further information.
