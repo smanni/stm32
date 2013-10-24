@@ -27,9 +27,9 @@ for this target device:
 Setup the working directory that will contain all the necessary (development tools and workspace).
 
   ```
-  mkdir -p ${HOME}/stm32/devTools/toolchain
-  mkdir -p ${HOME}/stm32/devTools/openOCD
-  mkdir -p ${HOME}/stm32/workspace
+  mkdir -p $HOME/stm32/devTools/toolchain
+  mkdir -p $HOME/stm32/devTools/openOCD
+  mkdir -p $HOME/stm32/workspace
   ```
 
 ### Toolchain
