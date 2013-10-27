@@ -1,4 +1,4 @@
-SMT32F103Z
+STM32F103Z
 ==========
 
 My repository for learning STM32F103Z microcontroller using a Linux based development envronment.
