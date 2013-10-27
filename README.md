@@ -82,6 +82,8 @@ Reload it and test it:
 ### Eclipse
 Download Eclipse for C/C++ developers from http://www.eclipse.org/downloads/
 
+Extract the archive into ${HOME}/stm32/devTools/eclipse
+
 Launch the IDE and install the Zylinn plugin using the Plugins Manager with this URL http://opensource.zylin.com/zylincdt
 
 ### Workspace
