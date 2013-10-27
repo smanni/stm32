@@ -19,6 +19,7 @@
 *.elf
 
 # Eclipse
+*RemoteSystemsTempFiles/
 *.metadata/
 *Debug/
 *Release/
