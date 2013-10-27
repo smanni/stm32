@@ -1,10 +1,9 @@
+/*
+ * MAIN
+ */
 int main() {
 
-	int a = 0;
-	while(1)
-	{
-		a++;
-	}
+	while(1) {
 
-	return 0;
+	}
 }
