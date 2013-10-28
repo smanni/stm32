@@ -6,8 +6,7 @@ My repository for learning STM32F103Z microcontroller using a Linux based develo
 Table of contents:
 
 * [Setup development environment](#setup-development-environment)
-* [Create a new project](#create-a-new-project-from-template)
-* [Build, burn and debug](#build-burn-and-debug)
+* [Make your project](#make-your-project)
 
 
 Setup development environment
@@ -97,16 +96,18 @@ Launch Eclipse and switch workspace to HOME/stm32/github.
 
 Import all the projects into the workspace using the menu File->Import->General->Existing Projects into Workspace
 
+Make your project
+-----------------
 
-Create a new project from template
-----------------------------------
+Here some instructions to have a working project.
+
+### Create a new project from template
 * Select the Template project
 * Right-click and select copy (Ctrl+C)
 * Paste (Ctrl+V) renaming the project as you want
 
 
-Build
------
+### Build
 * Select the project you want to build
 * Select the build configuration:
   * Right-click on the project
@@ -116,8 +117,7 @@ Build
   * Select 'Buil project'
 * Check for errors in the console
 
-Debug
------
+### Debug
 * Add a new debug configuration:
   * Select the project you want to debug
   * Select the menu 'Run->Debug Configurations...' 
