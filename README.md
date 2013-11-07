@@ -1,4 +1,4 @@
-SMT32F103Z
+STM32F103Z
 ==========
 
 My repository for learning STM32F103Z microcontroller using a Linux based development envronment.
@@ -6,8 +6,7 @@ My repository for learning STM32F103Z microcontroller using a Linux based develo
 Table of contents:
 
 * [Setup development environment](#setup-development-environment)
-* [Create a new project](#create-a-new-project-from-template)
-* [Build, burn and debug](#build-burn-and-debug)
+* [Make your project](#make-your-project)
 
 
 Setup development environment
@@ -36,7 +35,7 @@ Download executables from https://launchpad.net/gcc-arm-embedded.
 At this moment only the 32-bit version is available, so if you are working on a 64-bit host operating system you need 
 to installsome dependencies: 32-bit version of glibc and ncurses libraries.
 
-Extract the archive into ${HOME}/stm32/devTools/toolchain
+Extract the archive into $HOME/stm32/devTools/toolchain
 
 Update you PATH editing the file $HOME/.bashrc (ubuntu, debian, etc.) or $HOME/.bash_profile (fedora) adding this line:
 
@@ -57,11 +56,11 @@ Install them with the package manager of your host linux distribution (aptitude,
 
 Download OpenOCD sources from http://freefr.dl.sourceforge.net/project/openocd/openocd
 
-Extract the archive into ${HOME}/stm32/devTools/openOCD
+Extract the archive into $HOME/stm32/devTools/openOCD
 
 Build it:
   ```
-  cd ${HOME}/stm32/devTools/openOCD
+  cd $HOME/stm32/devTools/openOCD
   ./configure --enable-stlink
   make
   ```
@@ -82,6 +81,8 @@ Reload it and test it:
 ### Eclipse
 Download Eclipse for C/C++ developers from http://www.eclipse.org/downloads/
 
+Extract the archive into $HOME/stm32/devTools/eclipse
+
 Launch the IDE and install the Zylinn plugin using the Plugins Manager with this URL http://opensource.zylin.com/zylincdt
 
 ### Workspace
@@ -95,16 +96,18 @@ Launch Eclipse and switch workspace to HOME/stm32/github.
 
 Import all the projects into the workspace using the menu File->Import->General->Existing Projects into Workspace
 
+Make your project
+-----------------
 
-Create a new project from template
-----------------------------------
+Here some instructions to have a working project.
+
+### Create a new project from template
 * Select the Template project
 * Right-click and select copy (Ctrl+C)
 * Paste (Ctrl+V) renaming the project as you want
 
 
-Build
------
+### Build
 * Select the project you want to build
 * Select the build configuration:
   * Right-click on the project
@@ -114,8 +117,7 @@ Build
   * Select 'Buil project'
 * Check for errors in the console
 
-Debug
------
+### Debug
 * Add a new debug configuration:
   * Select the project you want to debug
   * Select the menu 'Run->Debug Configurations...' 
