@@ -18,12 +18,16 @@
 #define USART1_TX				  	GPIO_Pin_9
 #define USART1_RX				  	GPIO_Pin_10
 
+/* Define which USART use for stdin, stdout, stderr */
+#define STDIN_USART 				1
+#define STDOUT_USART 				1
+#define STDERR_USART 				1
+
 /* FORWARD DECLARATIONS */
 void GPIO_configure(void);
 void RCC_configure(void);
 void USART_configure(void);
 void delay (uint32_t nCount);
-void led_toggle(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 /* Global variables */
 uint32_t g_msCounter = 0;
@@ -47,12 +51,11 @@ int main()
 	setvbuf(stdin, NULL, _IONBF, 0);
 	setvbuf(stdout, NULL, _IONBF, 0);
 
-	/* Do nothing here. Everything works via ISR */
     while(1)
     {
-    	printf("Insert your name:\n");
+    	printf("Insert your name:");
     	scanf("%s", name);
-    	printf("Hey %s, how are you?\n", name);
+    	printf("Hey %s, how are you?\n\n", name);
     }
 
     /* Control should never come here */
@@ -101,23 +104,6 @@ void GPIO_configure(void)
 	GPIO_Init(USART1_PINS_GPIO_PERIPH, &GPIO_USART1_InitStructure);
 }
 
-#if 1
-/*
- * Nested vector table configuration
- */
-void NVIC_configure(void)
-{
-	// Enable USART1 global interrupt
-	NVIC_InitTypeDef NVIC_InitStructure;
-
-	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);
-}
-#endif
-
 /*
  * USART configuration
  */
@@ -138,44 +124,7 @@ void USART_configure(void)
 	USART1_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
 
 	USART_Init(USART1, &USART1_InitStructure);
-
-#if 1
-	// Enable RXNE interrupt
-	USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
-#endif
 }
-
-#if 0
-/*
- * Overwrite the weak interrupt handler for USART1
- */
-void USART1_IRQHandler(void)
-{
-    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
-    {
-        // If received 't', toggle LED1 and echo 'T'
-    	char rcvChar = (char)USART_ReceiveData(USART1);
-        if(rcvChar == 't')
-        {
-            led_toggle(LEDS_GPIO_PERIPH, LED1);
-            USART_SendData(USART1, (uint16_t)'T');
-        }
-    }
-}
-#endif
-
-#if 0
-int fputc(int ch, FILE * f)
-{
-  /* Transmit the character using USART1 */
-  USART_SendData(USART1, (uint16_t) ch);
-
-  /* Wait until transmit finishes */
-  while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
-
-  return ch;
-}
-#endif
 
 /*
  * Overwrite weak handler for systick interrupts
@@ -185,16 +134,6 @@ void SysTick_Handler(void)
 	if(g_msCounter > 0)
 		g_msCounter--;
 }
-
-/*
- * Toggle a GPIO (LED)
- */
-void led_toggle(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
-{
-	// Not using STDPeriph API is more efficient here
-	GPIOx->ODR ^= GPIO_Pin;
-}
-
 
 /*
  * Delay function
