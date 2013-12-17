@@ -1,7 +1,7 @@
 STM32F103Z
 ==========
 
-My repository for learning STM32F103Z microcontroller using a Linux based development envronment.
+My repository for learning STM32F103Z microcontroller using a GNU/Linux based development envronment. It aims to show how to work with this cortex-M3 based micontroller using only free tools.
 
 Table of contents:
 
