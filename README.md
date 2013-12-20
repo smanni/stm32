@@ -81,7 +81,7 @@ Reload it and test it:
 ### Eclipse
 Download Eclipse for C/C++ developers from http://www.eclipse.org/downloads/
 
-Extract the archive into $HOME/stm32/devTools/eclipse
+Make sure a Java VM is installed on your host PC then extract the archive into $HOME/stm32/devTools/eclipse
 
 Launch the IDE and install the Zylinn plugin using the Plugins Manager with this URL http://opensource.zylin.com/zylincdt
 
@@ -92,7 +92,7 @@ Clone the git repository:
   git clone git@github.com:smanni/stm32.git github 
   ```
   
-Launch Eclipse and switch workspace to HOME/stm32/github.
+Launch Eclipse and switch workspace to $HOME/stm32/github.
 
 Import all the projects into the workspace using the menu File->Import->General->Existing Projects into Workspace
 
