@@ -114,7 +114,7 @@ Here some instructions to have a working project.
   * Select 'Build-configuration' and choose between Debug and Release
 * Build: 
   * Right-click on the project
-  * Select 'Buil project'
+  * Select 'Build project'
 * Check for errors in the console
 
 ### Debug
