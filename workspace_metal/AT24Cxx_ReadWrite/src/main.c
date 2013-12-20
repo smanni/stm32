@@ -12,6 +12,9 @@
  */
 int main()
 {
+	uint8_t data_w[32] = {0xca, 0xfe, 0xca, 0xfe};
+	uint8_t data_r[32];
+
 	struct AT24Cxx_init_struct AT24C01A_init;
 
 	AT24C01A_init.type = AT24C01A;
@@ -26,6 +29,9 @@ int main()
 
 	AT24Cxx_init(&AT24C01A_init);
 
+	AT24Cxx_write(&AT24C01A_init, 0, data_w, 4);
+
+	AT24Cxx_read(&AT24C01A_init, 0, data_r, 4);
 
 	while(1) {
 
