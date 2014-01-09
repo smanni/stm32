@@ -82,7 +82,7 @@ uint32_t AT24Cxx_read(struct AT24Cxx_init_struct* init, uint8_t addr, uint8_t* b
   	while (!I2C_CheckEvent(init->I2C_peripheral, I2C_EVENT_MASTER_MODE_SELECT));
 
   	I2C_Send7bitAddress(init->I2C_peripheral, init->I2C_address, I2C_Direction_Receiver);
-  	while (!I2C_CheckEvent(init->I2C_peripheral, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
+  	while (!I2C_CheckEvent(init->I2C_peripheral, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED));
 
   	while (count--) {
 		while(!I2C_CheckEvent(init->I2C_peripheral, I2C_EVENT_MASTER_BYTE_RECEIVED));
