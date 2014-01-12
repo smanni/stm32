@@ -9,15 +9,16 @@
 typedef enum {AT24C01A} AT24Cxx_type;
 
 struct AT24Cxx_init_struct {
-	AT24Cxx_type type;
-	uint8_t I2C_address;
-	uint16_t I2C_master_address;
-	uint32_t I2C_clock;
-	uint32_t GPIO_clock;
-	I2C_TypeDef* I2C_peripheral;
-	GPIO_TypeDef* GPIO_peripheral;
-	uint16_t GPIO_SCL_pin;
-	uint16_t GPIO_SDA_pin;
+	uint8_t pages;							// number of pages
+	uint8_t page_size;						// page size (in bytes)
+	uint8_t I2C_address;					// I2C EEPROM address
+	uint16_t I2C_master_address;			// I2C master address
+	uint32_t I2C_clock;						// I2C peripheral clock
+	uint32_t GPIO_clock;					// GPIO peripheral clock
+	I2C_TypeDef* I2C_peripheral;			// I2C peripheral
+	GPIO_TypeDef* GPIO_peripheral;			// GPIO peripheral
+	uint16_t GPIO_SCL_pin;					// I2C SCL pin
+	uint16_t GPIO_SDA_pin;					// I2C SDA pin
 };
 
 
