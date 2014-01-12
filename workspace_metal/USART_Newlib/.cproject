@@ -100,7 +100,7 @@
 									<listOptionValue builtIn="false" value="STM32F10X_HD"/>
 									<listOptionValue builtIn="false" value="HSE_VALUE=8000000"/>
 								</option>
-								<option id="gnu.c.compiler.option.misc.other.1338390632" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wextra -Werror -fno-exceptions -mcpu=cortex-m3 -mthumb -gdwarf-2" valueType="string"/>
+								<option id="gnu.c.compiler.option.misc.other.1338390632" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -ffunction-sections -fdata-sections -Wall -Wextra -fno-exceptions -mcpu=cortex-m3 -mthumb -gdwarf-2" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1268398230" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1183837655" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
