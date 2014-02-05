@@ -9,7 +9,7 @@
 #define AT24C01A_T_WRITE 0x05    /* Time needed for a write operation[ms] */
 
 #define POISON_START 	 0x00
-#define DATA_SIZE		 21
+#define DATA_SIZE		 128
 
 /* FORWARD DECLARATIONS */
 void delay (uint32_t ms);
@@ -53,9 +53,11 @@ int main()
 		i++;
 	}
 
-	AT24Cxx_write(&AT24C01A_init, 0, data_w, DATA_SIZE);
+	if (!AT24Cxx_write(&AT24C01A_init, 0, data_w, DATA_SIZE))
+		while(1);
 
-	AT24Cxx_read(&AT24C01A_init, 0, data_r, DATA_SIZE);
+	if (!AT24Cxx_read(&AT24C01A_init, 0, data_r, DATA_SIZE))
+		while(1);
 
 	while(1);
 
