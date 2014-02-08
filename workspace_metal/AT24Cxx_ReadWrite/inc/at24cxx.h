@@ -6,8 +6,6 @@
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_gpio.h"
 
-typedef enum {AT24C01A} AT24Cxx_type;
-
 struct AT24Cxx_init_struct {
 	uint8_t pages;							/* number of pages */
 	uint8_t page_size;						/* page size (in bytes) */
