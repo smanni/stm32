@@ -5,10 +5,16 @@
 #include "at45dbxx.h"
 #include "misc.h"
 
+#define TEST_BUF_SIZE 264
+
 /*
  * MAIN
  */
 int main() {
+
+	uint32_t n, id, man, dev, fam, den;
+	uint8_t buf_i[TEST_BUF_SIZE];
+	uint8_t	buf_o[TEST_BUF_SIZE];
 
 	/* 4 Mbit dataflash (AT45DB041D) organized in 2048 pages of 256 bytes */
 	struct AT45DBxx_init init = {
@@ -28,7 +34,6 @@ int main() {
 		while(1);
 
 	/* Read device ID */
-	uint32_t id, man, dev, fam, den;
 	id = AT45DBxx_read_id(&init);
 	man = ID_TO_MANUFACTURER_ID(id);
 	dev = ID_TO_DEVICE_ID(id);
@@ -36,34 +41,31 @@ int main() {
 	den = ID_TO_DENSITY_CODE(id);
 
 	/* Internal SRAM buffer1 write and read */
-	uint32_t n;
-	uint8_t buf_i[32];
-	uint8_t	buf_o[32];
-	for(n = 0; n < 32; n++) {
+	for(n = 0; n < TEST_BUF_SIZE; n++) {
 		buf_i[n] = n;
 		buf_o[n] = 0xca;
 	}
-	AT45DBxx_buffer_write(buf_i, &init, 1, 0x0, 32);
-	AT45DBxx_buffer_read(buf_o, &init, 1, 0x0, 32);
-	for(n = 0; n < 32; n++)
+	AT45DBxx_buffer_write(buf_i, &init, 1, 0x0, TEST_BUF_SIZE);
+	AT45DBxx_buffer_read(buf_o, &init, 1, 0x0, TEST_BUF_SIZE);
+	for(n = 0; n < TEST_BUF_SIZE; n++)
 		if(buf_i[n] != buf_o[n])
 			while(1);
 
 	/* Main memory page write and read */
-	for(n = 0; n < 32; n++) {
+	for(n = 0; n < TEST_BUF_SIZE; n++) {
 		buf_i[n] = n;
-		buf_o[n] = 0xff;
+		buf_o[n] = 0xca;
 	}
-	AT45DBxx_page_write(buf_i, &init, 0x0, 0x0, 32);
-	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, 32);
-	for(n = 0; n < 32; n++)
+	AT45DBxx_page_write(buf_i, &init, 0x0, 0x0, TEST_BUF_SIZE);
+	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, TEST_BUF_SIZE);
+	for(n = 0; n < TEST_BUF_SIZE; n++)
 		if(buf_i[n] != buf_o[n])
 			while(1);
 
 	/* Main memory page erase */
 	AT45DBxx_page_erase(&init, 0x0);
-	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, 32);
-	for(n = 0; n < 32; n++)
+	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, TEST_BUF_SIZE);
+	for(n = 0; n < TEST_BUF_SIZE; n++)
 		if(buf_o[n] != 0xff)
 			while(1);
 

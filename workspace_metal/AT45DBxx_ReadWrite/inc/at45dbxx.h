@@ -27,8 +27,12 @@
 #define OP_PAGE_ERASE				0x81
 
 /* Others */
-#define BUF_SIZE					256		/* SRAM buffers size in bytes */
-#define PAGE_SIZE					256		/* main memory page size in bytes */
+#define BUF_SIZE					264		/* SRAM buffers size in bytes
+											 * This size is user-configurable(256/264) via one-time-programmable register
+											 * but the dataflash is initially shipped with size set to 264 */
+#define PAGE_SIZE					264		/* main memory page size in bytes
+											 * This size is user-configurable(256/264) via one-time-programmable register
+											 * but the dataflash is initially shipped with size set to 264 */
 
 /* Data types */
 struct AT45DBxx_init {

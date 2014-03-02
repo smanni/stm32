@@ -120,7 +120,7 @@ void AT45DBxx_busy_wait(struct AT45DBxx_init* init)
 	CS_DEASSERT(init);
 }
 
-/* SRAM buffers read (two buffers of 256 bytes)
+/* SRAM buffers read (two buffers)
  *
  * @param [OUT] buf buffer where store results
  * @param init
@@ -131,8 +131,8 @@ void AT45DBxx_busy_wait(struct AT45DBxx_init* init)
  */
 uint32_t AT45DBxx_buffer_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t which, uint32_t addr, uint32_t count)
 {
-	/* SI: OPCODE; two dont care bytes; BFA8-BFA0; one dont care byte
-     * three address bytes comprised of 16 don’t care bits and 8 buffer address bits (BFA7 - BFA0).
+	/* SI: OPCODE; address
+     * Address bytes comprised of 15 dont care bits and 9 buffer address bits (BFA8 - BFA0)
      *
 	 * SO: data (n; n+1, ...)
 	 */
@@ -150,10 +150,10 @@ uint32_t AT45DBxx_buffer_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t
 	AT45DBxx_busy_wait(init);
 	CS_ASSERT(init);
 	send(init, which == 1 ? OP_BUF1_READ : OP_BUF2_READ);
-	send(init, 0x00);
-	send(init, 0x00);
-	send(init, addr);
-	send(init, 0x00);
+	send(init, 0x00);				/* dont care 8 bits */
+	send(init, (addr >> 8) & 0x1);	/* dont care 7 bits + BFA8 */
+	send(init, addr & 0xff);		/* BFA7-BFA0 */
+	send(init, 0x00);				/* dont care 8 bits */
 	while(i < count)
 		buf[i++] = receive(init);
 	CS_DEASSERT(init);
@@ -161,7 +161,7 @@ uint32_t AT45DBxx_buffer_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t
 	return count;
 }
 
-/* Main memory page read (pages of 256 bytes)
+/* Main memory page read
  *
  * @param [OUT] buf buffer where store results
  * @param init
@@ -172,9 +172,11 @@ uint32_t AT45DBxx_buffer_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t
  */
 uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t page, uint32_t addr, uint32_t count)
 {
-	/* SI: OPCODE; A18-A16; A15-A8; A7-A0; four dont care bytes
-	 * The first 11 bits (A18 - A8) of the 19-bits sequence specify which page of the main memory array to read,
-	 * and the last 8 bits (A7 - A0) of the 19-bits address sequence specify the starting byte address within the page
+	/* SI: OPCODE; address
+	 * Address bytes comprised the 24-bit page and byte address sequence and 4 don’t care bytes.
+	 * The first 11 bits (PA10 - PA0) of the 20-bit address sequence specify the page in main
+	 * memory to be read, and the last 9 bits (BA8 - BA0) of the 20-bit address sequence specify
+	 * the starting byte address within that page.
 	 *
 	 * SO: data (n; n+1, ...)
 	 */
@@ -190,9 +192,9 @@ uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t p
 	AT45DBxx_busy_wait(init);
 	CS_ASSERT(init);
 	send(init, OP_PAGE_READ);
-	send(init, page >> 8);
-	send(init, page & 0xff);
-	send(init, addr);
+	send(init, (page >> 7) & 0xf);								/* dont care 4 bits + PA10-PA7 */
+	send(init, ((page & 0x7f) << 1) | ((addr >> 8) & 0x1 ) ); 	/* PA6-PA0 + BA8 */
+	send(init, addr & 0xff); 									/* BA7-BA0 */
 	send(init, 0x00);
 	send(init, 0x00);
 	send(init, 0x00);
@@ -204,7 +206,7 @@ uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t p
 	return count;
 }
 
-/* SRAM buffers write (two buffers of 256 bytes)
+/* SRAM buffers write (two buffers)
  *
  * @param buf buffer containing data to be written
  * @param init
@@ -215,8 +217,8 @@ uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t p
  */
 uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t which, uint32_t addr, uint32_t count)
 {
-	/* SI: OPCODE; two dont care bytes; BFA8-BFA0; data(n); data(n+1); ...
-     * three address bytes comprised of 16 don’t care bits and 8 buffer address bits (BFA7 - BFA0).
+	/* SI: OPCODE; address, data(n); data(n+1); ...
+     * Address bytes comprised of 15 don’t care bits and 9 buffer address bits (BFA8 - BFA0).
 	 */
 
 	uint32_t i = 0;
@@ -232,9 +234,9 @@ uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_
 	AT45DBxx_busy_wait(init);
 	CS_ASSERT(init);
 	send(init, which == 1 ? OP_BUF1_WRITE : OP_BUF2_WRITE);
-	send(init, 0x00);
-	send(init, 0x00);
-	send(init, addr);
+	send(init, 0x00);				/* dont care 8 bits */
+	send(init, (addr >> 8) & 0x1);	/* dont care 7 bits + BFA8 */
+	send(init, addr & 0xff);		/* BFA7-BFA0 */
 	while(i < count)
 		send(init, buf[i++]);
 	CS_DEASSERT(init);
@@ -242,7 +244,7 @@ uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_
 	return count;
 }
 
-/* Main memory page write (pages of 256 bytes) through internal buffers
+/* Main memory page write through internal buffers (buffer1 chosen)
  *
  * @param buf buffer containing data to be written
  * @param init
@@ -253,9 +255,10 @@ uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_
  */
 uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t page, uint32_t addr, uint32_t count)
 {
-	/* SI: OPCODE; A18-A16; A15-A8; A7-A0; data(n); data(n+1); ...
-	 * The first 11 bits (A18 - A8) of the 19-bits sequence specify which page of the main memory array to read,
-	 * and the last 8 bits (A7 - A0) of the 19-bits address sequence specify the starting byte address within the page
+	/* SI: OPCODE; address; data(n); data(n+1); ...
+	 * Address bytes comprised of 4 don’t care bits, 11 page address bits,
+	 * (PA10 - PA0) that select the page in the main memory where data is to be written, and 9 buffer
+	 * address bits (BFA8 - BFA0) that select the first byte in the buffer to be written.
 	 */
 
 	uint32_t i = 0;
@@ -269,9 +272,9 @@ uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t 
 	AT45DBxx_busy_wait(init);
 	CS_ASSERT(init);
 	send(init, OP_PAGE_WRITE);
-	send(init, page >> 8);
-	send(init, page & 0xff);
-	send(init, addr);
+	send(init, (page >> 7) & 0xf);								/* dont care 4 bits + PA10-PA7 */
+	send(init, ((page & 0x7f) << 1) | ((addr >> 8) & 0x1 ) ); 	/* PA6-PA0 + BFA8 */
+	send(init, addr & 0xff); 									/* BFA7-BFA0 */
 	while(i < count)
 		send(init, buf[i++]);
 	CS_DEASSERT(init);
@@ -279,7 +282,7 @@ uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t 
 	return count;
 }
 
-/* Main memory page erase (pages of 256 bytes)
+/* Main memory page erase
  *
  * @param init
  * @param page page address
@@ -287,9 +290,9 @@ uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t 
  */
 uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page)
 {
-	/* SI: OPCODE; A18-A16; A15-A8; dont care byte
-	 * three address bytes consist of 5 don’t care bits, 11 page address bits (A18 - A8) that specify the
-	 * page in the main memory to be erased and 8 don’t care bits
+	/* SI: OPCODE; address
+	 * Address bytes comprised of 4 don’t care bits, 11 page address
+	 * bits (PA10 - PA0) that specify the page in the main memory to be erased and 9 don’t care bits.
 	 */
 
 	/* check arguments */
@@ -299,9 +302,9 @@ uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page)
 	AT45DBxx_busy_wait(init);
 	CS_ASSERT(init);
 	send(init, OP_PAGE_ERASE);
-	send(init, page >> 8);
-	send(init, page & 0xff);
-	send(init, 0x00);
+	send(init, (page >> 7) & 0xf);								/* dont care 4 bits + PA10-PA7 */
+	send(init, (page & 0x7f) << 1); 							/* PA6-PA0 + dont care 1 bit */
+	send(init, 0x00);											/* dont care 8 bits */
 	CS_DEASSERT(init);
 
 	return 0;
