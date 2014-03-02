@@ -309,3 +309,22 @@ uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page)
 
 	return 0;
 }
+
+/* Put the device in deep power down mode */
+void AT45DBxx_put_deep_power_down(struct AT45DBxx_init* init)
+{
+	AT45DBxx_busy_wait(init);
+	CS_ASSERT(init);
+	send(init, OP_DEEP_POWER_DOWN);
+	CS_DEASSERT(init);
+}
+
+/* Resume from deep power down mode */
+void AT45DBxx_resume_deep_power_down(struct AT45DBxx_init* init)
+{
+	/* Once the device has entered the Deep Power-down mode, all instructions
+	 * are ignored except for the Resume from Deep Power-down command */
+	CS_ASSERT(init);
+	send(init, OP_RESUME_DEEP_POWER_DOWN);
+	CS_DEASSERT(init);
+}

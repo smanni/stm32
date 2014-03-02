@@ -69,6 +69,11 @@ int main() {
 		if(buf_o[n] != 0xff)
 			while(1);
 
+	/* Deep power down mode (remove the comment two lines below if you want to test the feature */
+	AT45DBxx_put_deep_power_down(&init);
+	/* AT45DBxx_busy_wait(&init);  It should block here */
+	AT45DBxx_resume_deep_power_down(&init);
+
 	/* Control should never come here */
 	while(1);
 }

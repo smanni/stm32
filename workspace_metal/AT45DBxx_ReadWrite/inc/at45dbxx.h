@@ -25,6 +25,8 @@
 #define OP_BUF2_WRITE				0x87
 #define OP_PAGE_WRITE				0x82
 #define OP_PAGE_ERASE				0x81
+#define OP_DEEP_POWER_DOWN			0xB9
+#define OP_RESUME_DEEP_POWER_DOWN	0xAB
 
 /* Others */
 #define BUF_SIZE					264		/* SRAM buffers size in bytes
@@ -58,6 +60,8 @@ uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t p
 uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t which, uint32_t addr, uint32_t count);
 uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t page, uint32_t addr, uint32_t count);
 uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page);
+void AT45DBxx_put_deep_power_down(struct AT45DBxx_init* init);
+void AT45DBxx_resume_deep_power_down(struct AT45DBxx_init* init);
 
 
 #endif /* __AT45DBXX_h__ */
