@@ -278,3 +278,31 @@ uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t 
 
 	return count;
 }
+
+/* Main memory page erase (pages of 256 bytes)
+ *
+ * @param init
+ * @param page page address
+ * @return 0 if succedeed, 1 otherwise
+ */
+uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page)
+{
+	/* SI: OPCODE; A18-A16; A15-A8; dont care byte
+	 * three address bytes consist of 5 don’t care bits, 11 page address bits (A18 - A8) that specify the
+	 * page in the main memory to be erased and 8 don’t care bits
+	 */
+
+	/* check arguments */
+	if(page > (init->capacity / PAGE_SIZE))
+		return 1;
+
+	AT45DBxx_busy_wait(init);
+	CS_ASSERT(init);
+	send(init, OP_PAGE_ERASE);
+	send(init, page >> 8);
+	send(init, page & 0xff);
+	send(init, 0x00);
+	CS_DEASSERT(init);
+
+	return 0;
+}

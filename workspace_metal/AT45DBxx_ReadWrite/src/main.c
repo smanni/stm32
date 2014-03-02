@@ -41,7 +41,7 @@ int main() {
 	uint8_t	buf_o[32];
 	for(n = 0; n < 32; n++) {
 		buf_i[n] = n;
-		buf_o[n] = 0xff;
+		buf_o[n] = 0xca;
 	}
 	AT45DBxx_buffer_write(buf_i, &init, 1, 0x0, 32);
 	AT45DBxx_buffer_read(buf_o, &init, 1, 0x0, 32);
@@ -49,16 +49,23 @@ int main() {
 		if(buf_i[n] != buf_o[n])
 			while(1);
 
-	/* Main memory write and read */
+	/* Main memory page write and read */
 	for(n = 0; n < 32; n++) {
 		buf_i[n] = n;
 		buf_o[n] = 0xff;
 	}
 	AT45DBxx_page_write(buf_i, &init, 0x0, 0x0, 32);
 	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, 32);
-		for(n = 0; n < 32; n++)
-			if(buf_i[n] != buf_o[n])
-				while(1);
+	for(n = 0; n < 32; n++)
+		if(buf_i[n] != buf_o[n])
+			while(1);
+
+	/* Main memory page erase */
+	AT45DBxx_page_erase(&init, 0x0);
+	AT45DBxx_page_read(buf_o, &init, 0x0, 0x0, 32);
+	for(n = 0; n < 32; n++)
+		if(buf_o[n] != 0xff)
+			while(1);
 
 	/* Control should never come here */
 	while(1);

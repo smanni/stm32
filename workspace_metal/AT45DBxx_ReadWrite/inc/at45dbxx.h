@@ -24,6 +24,7 @@
 #define OP_BUF1_WRITE				0x84
 #define OP_BUF2_WRITE				0x87
 #define OP_PAGE_WRITE				0x82
+#define OP_PAGE_ERASE				0x81
 
 /* Others */
 #define BUF_SIZE					256		/* SRAM buffers size in bytes */
@@ -52,6 +53,7 @@ uint32_t AT45DBxx_buffer_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t
 uint32_t AT45DBxx_page_read(uint8_t* buf, struct AT45DBxx_init* init, uint32_t page, uint32_t addr, uint32_t count);
 uint32_t AT45DBxx_buffer_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t which, uint32_t addr, uint32_t count);
 uint32_t AT45DBxx_page_write(uint8_t* buf, struct AT45DBxx_init* init, uint32_t page, uint32_t addr, uint32_t count);
+uint32_t AT45DBxx_page_erase(struct AT45DBxx_init* init, uint32_t page);
 
 
 #endif /* __AT45DBXX_h__ */
