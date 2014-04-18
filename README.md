@@ -7,7 +7,7 @@ In particular there are two workspaces:
 
 * workspace_eclipse: eclipse projects based StdPeriph library
 
-* workspace_libopencm3: projects based on libopencm3 library (https://github.com/libopencm3/libopencm3)
+* workspace_libopencm3: projects based on [libopencm3] (https://github.com/libopencm3/libopencm3) library
 
 Both rely on GCC toolchain and OpenOCD.
 
