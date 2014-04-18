@@ -9,7 +9,7 @@ TOC
 
 Table of contents:
 * [Setup development environment](#setup-development-environment)
-* [Make your project](#make-your-project)  TODO
+* [Make your project](#make-your-project)
 
 
 Setup development environment
@@ -96,10 +96,11 @@ Here some instructions to have a working project.
 ### Create a new project from template
 cd $HOME/stm32/github/workspace_libopencm3
 cp -R template <your_project>
-
-### Edit
 cd <your_project>
-use your favorite editor to edit your sources
 
-### Compile 
+Use your favorite editor to edit your sources and consistently modify the Makefile
+
+### Build and debug 
 make
+
+TODO
