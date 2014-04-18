@@ -92,7 +92,7 @@ Launch the IDE and install the Zylinn plugin using the Plugins Manager with this
 Clone the git repository:
   ```
   cd $HOME/stm32
-  git clone git@github.com:smanni/stm32.git github 
+  git clone https://github.com/smanni/stm32.git github
   ```
   
 Launch Eclipse and switch workspace to $HOME/stm32/github.
