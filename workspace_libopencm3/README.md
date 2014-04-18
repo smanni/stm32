@@ -17,13 +17,8 @@ Setup development environment
 
 Here are some instructions to have on a Linux host a complete development environment based on this toolset:
 
-* Eclipse
 * GCC ARM Embedded Toolchain
 * OpenOCD
-
-for this target device:
-* STM32F103Z based board (bought on [WaveShare](http://www.wvshare.com/column/STM32_DevelopmentBoard.htm#Open103Z))
-* ST-LINK/V2 debugger and programmer 
 
 ### Working directory
 Setup the working directory that will contain all the necessary (development tools and workspace).
