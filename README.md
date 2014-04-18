@@ -9,5 +9,9 @@ In particular there are two workspaces:
 
 * workspace_libopencm3: projects based on libopencm3 library
 
-Both rely on GCC toolchain and OpenOCD debugger.
+Both rely on GCC toolchain and OpenOCD.
 
+My hardware set consists of:
+
+* STM32F103Z based board (bought on [WaveShare](http://www.wvshare.com/column/STM32_DevelopmentBoard.htm#Open103Z))
+* ST-LINK/V2 debugger and programmer.
