@@ -3,7 +3,14 @@ STM32F103Z - Workspace eclipse
 
 Some programs for learning STM32F103Z microcontroller using a Linux based development envronment based on Elicpse + GCC toolchain + OpenOCD + StdPeriph library.
 
-The examples try to use all the available peripherals that are on-board and some ICs that I have.
+
+TOC
+---
+
+Table of contents:
+* [Setup development environment](#setup-development-environment)
+* [Make your project](#make-your-project)
+
 
 Setup development environment
 -----------------------------
