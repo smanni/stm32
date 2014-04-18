@@ -137,7 +137,7 @@ Here some instructions to have a working project.
   
   ```
   cd $HOME/stm32/github
-  cd workspace_metal
+  cd workspace_eclipse
   openocd -f OpenOCD/stm_board.cfg 
   ```
   
