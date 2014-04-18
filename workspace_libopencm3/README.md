@@ -1,7 +1,7 @@
 STM32F103Z - Workspace libopencm3
 ============================
 
-Some programs for learning STM32F103Z microcontroller using a Linux based development envronment relying on libopencm3.
+Some programs for learning STM32F103Z microcontroller using a Linux based development envronment relying on [libopencm3] (https://github.com/libopencm3/libopencm3) library.
 
 
 TOC
