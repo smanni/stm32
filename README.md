@@ -5,7 +5,7 @@ My repository for learning STM32F103Z microcontroller using a GNU/Linux based de
 
 In particular there are two workspaces:
 
-* workspace_eclipse: eclipse projects based StdPeriph library
+* workspace_eclipse: eclipse projects based on StdPeriph library
 
 * workspace_libopencm3: projects based on [libopencm3] (https://github.com/libopencm3/libopencm3) library
 
