@@ -24,8 +24,8 @@ Here are some instructions to have on a Linux host a complete development enviro
 Setup the working directory that will contain all the necessary (development tools and workspace).
 
   ```
-  $ mkdir -p $HOME/stm32/devTools/toolchain
-  $ mkdir -p $HOME/stm32/devTools/openOCD
+  mkdir -p $HOME/stm32/devTools/toolchain
+  mkdir -p $HOME/stm32/devTools/openOCD
   ```
 
 ### Toolchain
@@ -38,14 +38,14 @@ Extract the archive into $HOME/stm32/devTools/toolchain
 Update you PATH editing the file $HOME/.bashrc (ubuntu, debian, etc.) or $HOME/.bash_profile (fedora) adding this line:
 
   ```
-  $ export PATH=$PATH:$HOME/stm32/devTools/toolchain/bin
+  export PATH=$PATH:$HOME/stm32/devTools/toolchain/bin
   ```
   
 Reload it and test it:
 
   ```
-  $ source $HOME/.bashrc
-  $ arm-none-eabi-gcc --version
+  source $HOME/.bashrc
+  arm-none-eabi-gcc --version
   ```
 
 ### OpenOCD
@@ -58,15 +58,15 @@ Extract the archive into $HOME/stm32/devTools/openOCD
 
 Build it:
   ```
-  $ cd $HOME/stm32/devTools/openOCD
-  $ ./configure --enable-stlink
-  $ make
+  cd $HOME/stm32/devTools/openOCD
+  ./configure --enable-stlink
+  make
   ```
 
 Update you PATH editing the file $HOME/.bashrc (ubuntu, debian, etc.) or $HOME/.bash_profile (fedora) adding this line:
 
   ```
-  $ export PATH=$PATH:$HOME/stm32/devTools/openOCD/src
+  export PATH=$PATH:$HOME/stm32/devTools/openOCD/src
   ```
   
 Reload it and test it:
@@ -78,9 +78,10 @@ Reload it and test it:
 
 ### Workspace
 Clone the git repository:
+
   ```
-  $ cd $HOME/stm32
-  $ git clone https://github.com/smanni/stm32.git github
+  cd $HOME/stm32
+  git clone https://github.com/smanni/stm32.git github
   ```
   
 Make your project
@@ -89,15 +90,14 @@ Make your project
 Here some instructions to have a working project.
 
 ### Create a new project from template
+  
   ```
-  $ cd $HOME/stm32/github/workspace_libopencm3
-  $ cp -R template <your_project>
-  $ cd <your_project>
+  cd $HOME/stm32/github/workspace_libopencm3
+  cp -R template <your_project>
+  cd <your_project>
   ```
 
 Use your favorite editor to edit your sources and consistently modify the Makefile
 
 ### Build and debug 
-make
-
 TODO
